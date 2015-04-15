@@ -4,10 +4,11 @@
 	<br /><br />
 	<p><%= @place.description %> </p>
 	
+<% if @place.latitude.present? && @place.longitude.present? %>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   <script>
     function initialize() {
-      var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+      var myLatlng = new google.maps.LatLng(<%= @place.latitude%>, <%= @place.longitude%>);
       var mapOptions = {
         zoom: 12,
         center: myLatlng
@@ -26,9 +27,10 @@
   </script>
 
   <div id="map-canvas"></div>
-
+<% end %>
 
 	<br />
+	
 	<div class="pull-right">
 		<% if current_user && current_user == @place.user %>
 			<%= link_to 'Edit', edit_place_path(@place), :class => 'btn btn-primary' %>
