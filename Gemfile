@@ -11,6 +11,8 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.3.0'
 gem 'autoprefixer-rails'
 gem 'simple_form'
+gem "geocoder"
+gem 'figaro',">=1.0.0"
 
 gem 'devise', '>= 3.2.4'
 
