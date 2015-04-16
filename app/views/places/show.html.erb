@@ -3,6 +3,7 @@
 	<i><%= @place.address %> </i>
 	<br /><br />
 	<p><%= @place.description %> </p>
+	<%=%>
 	
 <% if @place.latitude.present? && @place.longitude.present? %>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -49,6 +50,17 @@
 <div class="clear"></div>
 
 
+<!-- attempt at adding photo -->
+
+<%= simple_form_for @photo, :url => place_photos_path(@place) do |f| %>
+	<%= f.input :caption %>
+	<%= f.input :picture %>
+	<%= f.submit "Add a Photo", :class => 'btn btn-primary' %>
+
+<!-- attempt at adding photo -->
+
+
+
 
 <!-- Button trigger modal via bootstrap 3 --> 
  <!-- Modal --> <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
@@ -84,6 +96,13 @@
 
 <div class="clear"></div>
 
+<!--Trying to get photos to show here -->
+<% @place.photos.each do |photo| %>
+	<%= image_tag photo.picture %>
+  <%= photo.caption %>
+<% end %>
+
+<!-- =============================  -->
 
 <% @place.comments.each do |comment| %>
   <div class="col-xs-12 col-sm-6">
