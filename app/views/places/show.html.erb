@@ -3,7 +3,7 @@
 	<i><%= @place.address %> </i>
 	<br /><br />
 	<p><%= @place.description %> </p>
-	<%=%>
+	
 	
 <% if @place.latitude.present? && @place.longitude.present? %>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
@@ -37,7 +37,6 @@
 			<%= link_to 'Edit', edit_place_path(@place), :class => 'btn btn-primary' %>
 			<%= link_to 'Destroy', place_path(@place), :method => :delete, :data => {:confirm => 'Are you sure you want to delete this?'}, :class => 'btn btn-danger' %>
 		<% end %>		
-		
 	</div>
 
 	<%= link_to root_path, :class =>"btn btn-default btn-sm" do %>
@@ -49,20 +48,55 @@
 
 <div class="clear"></div>
 
+<!--Trying to get photos to show here -->
+<% @place.photos.each do |photo| %>
+ <div class="booyah-box col-xs-4-offset-1">
+ 	<br />
+	<%= image_tag photo.picture, :class =>'img-responsive' %>
+  <br />
+  <b><%= photo.caption %></b>
+  <br />
+<% end %>
 
-<!-- attempt at adding photo -->
-
-<%= simple_form_for @photo, :url => place_photos_path(@place) do |f| %>
-	<%= f.input :caption %>
-	<%= f.input :picture %>
-	<%= f.submit "Add a Photo", :class => 'btn btn-primary' %>
-
-<!-- attempt at adding photo -->
+<!-- =============================  -->
 
 
 
+<!-- Button trigger modal for Photo-->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+Add a Photo
+</button>
+<!-- Photo Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Add a Photo</h4>
+			</div>
 
-<!-- Button trigger modal via bootstrap 3 --> 
+		<%= simple_form_for @photo, :url => place_photos_path(@place) do |f| %>
+			<div class="modal-body">
+				<%= f.input :caption %>
+				<%= f.input :picture %>
+			</div>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<%= f.submit "Upload Photo", :class => 'btn btn-primary' %>
+			</div>
+		<% end %>
+		</div>
+	</div>
+</div>
+<!-- end Photo modal code -->
+
+<div class="clear"></div>
+
+
+
+
+
+<!-- Comment modal --> 
  <!-- Modal --> <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
  <div class="modal-dialog"> <div class="modal-content"> 
  	<div class="modal-header"> 
@@ -85,7 +119,7 @@
 	 </div> 
 	</div> 
 </div>
-
+<!-- end comment modal --> 
 
 <div class="col-xs-10 col-xs-offset-1">
 <h1 class="pull-left">Comments</h1>
@@ -96,13 +130,7 @@
 
 <div class="clear"></div>
 
-<!--Trying to get photos to show here -->
-<% @place.photos.each do |photo| %>
-	<%= image_tag photo.picture %>
-  <%= photo.caption %>
-<% end %>
 
-<!-- =============================  -->
 
 <% @place.comments.each do |comment| %>
   <div class="col-xs-12 col-sm-6">
