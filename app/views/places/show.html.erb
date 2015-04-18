@@ -49,14 +49,16 @@
 <div class="clear"></div>
 
 <!--Trying to get photos to show here -->
+
+<div class="booyah-box row">
 <% @place.photos.each do |photo| %>
- <div class="booyah-box col-xs-4-offset-1">
- 	<br />
+<div class= "col-md-4" style="text-align:center">
 	<%= image_tag photo.picture, :class =>'img-responsive' %>
-  <br />
-  <b><%= photo.caption %></b>
-  <br />
+	  <br />
+	  <b><%= photo.caption %></b>
+	</div>
 <% end %>
+</div>
 
 <!-- =============================  -->
 
