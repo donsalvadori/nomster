@@ -29,17 +29,13 @@ class PlacesController < ApplicationController
   def edit
     @place = Place.find(params[:id])
 
-    if @place.user != current_user
-      return render :text => 'Not Allowed', :status => :forbidden
-    end
+    return render text: 'Not Allowed', status: :forbidden unless user_allowed?(@place)
   end
 
   def update
     @place = Place.find(params[:id])
-    
-    if @place.user != current_user
-      return render :text => 'Not Allowed', :status => :forbidden
-    end
+
+    return render text: 'Not Allowed', status: :forbidden unless user_allowed?(@place)
 
     @place.update_attributes(place_params)
     if @place.valid?
@@ -52,9 +48,7 @@ class PlacesController < ApplicationController
   def destroy
     @place = Place.find(params[:id])
 
-    if @place.user != current_user
-      return render :text => 'Not Allowed', :status => :forbidden
-    end
+    return render text: 'Not Allowed', status: :forbidden unless user_allowed?(@place)
 
     @place.destroy
     redirect_to root_path
@@ -66,4 +60,7 @@ class PlacesController < ApplicationController
     params.require(:place).permit(:name, :description, :address)
   end
 
+  def user_allowed?(place)
+    (place.user != current_user)
+  end
 end
